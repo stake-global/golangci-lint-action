@@ -9,7 +9,7 @@ import { VersionConfig } from "./version"
 
 const execShellCommand = promisify(exec)
 
-const downloadURL = "https://github.com/golangci/golangci-lint/releases/download"
+const downloadURL =  core.getInput("download-url").toLowerCase();
 
 const getAssetURL = (versionConfig: VersionConfig): string => {
   let ext = "tar.gz"
