@@ -40,9 +40,9 @@ export const stringifyVersion = (v: Version): string => {
 }
 
 const minVersion = {
-  major: 1,
-  minor: 28,
-  patch: 3,
+  major: 0,
+  minor: 0,
+  patch: 0,
 }
 
 const isLessVersion = (a: Version, b: Version): boolean => {
@@ -142,7 +142,7 @@ export async function findLintVersion(mode: InstallMode): Promise<VersionConfig>
       const versionWithoutV = `${reqLintVersion.major}.${reqLintVersion.minor}.${reqLintVersion.patch}`
       resolve({
         TargetVersion: `v${versionWithoutV}`,
-        AssetURL: `https://github.com/golangci/golangci-lint/releases/download/v${versionWithoutV}/golangci-lint-${versionWithoutV}-linux-amd64.tar.gz`,
+        AssetURL: `${core.getInput('download-url')}/v${versionWithoutV}/golangci-lint-${versionWithoutV}-linux-amd64.tar.gz`,
       })
     })
   }
