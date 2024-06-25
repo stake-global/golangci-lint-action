@@ -13,6 +13,10 @@ inputs:
     description: "The mode to install golangci-lint. It can be 'binary' or 'goinstall'."
     default: "binary"
     required: false
+  download-url:
+    description: "When 'install-mode' is 'binary' this is where the binary can be downloaded from"
+    default: "https://github.com/golangci/golangci-lint/releases/download"
+    required: false
   working-directory:
     description: "golangci-lint working directory, default is project root"
     required: false
