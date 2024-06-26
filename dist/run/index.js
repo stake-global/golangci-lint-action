@@ -85120,7 +85120,7 @@ const os_1 = __importDefault(__nccwpck_require__(2037));
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const util_1 = __nccwpck_require__(3837);
 const execShellCommand = (0, util_1.promisify)(child_process_1.exec);
-const downloadURL = "https://github.com/golangci/golangci-lint/releases/download";
+const downloadURL = core.getInput("download-url").toLowerCase();
 const getAssetURL = (versionConfig) => {
     let ext = "tar.gz";
     let platform = os_1.default.platform().toString();
@@ -85719,9 +85719,9 @@ const stringifyVersion = (v) => {
 };
 exports.stringifyVersion = stringifyVersion;
 const minVersion = {
-    major: 1,
-    minor: 28,
-    patch: 3,
+    major: 0,
+    minor: 0,
+    patch: 0,
 };
 const isLessVersion = (a, b) => {
     if (a == null) {
@@ -85792,7 +85792,7 @@ async function findLintVersion(mode) {
             const versionWithoutV = `${reqLintVersion.major}.${reqLintVersion.minor}.${reqLintVersion.patch}`;
             resolve({
                 TargetVersion: `v${versionWithoutV}`,
-                AssetURL: `https://github.com/golangci/golangci-lint/releases/download/v${versionWithoutV}/golangci-lint-${versionWithoutV}-linux-amd64.tar.gz`,
+                AssetURL: `${core.getInput('download-url')}/v${versionWithoutV}/golangci-lint-${versionWithoutV}-linux-amd64.tar.gz`,
             });
         });
     }
