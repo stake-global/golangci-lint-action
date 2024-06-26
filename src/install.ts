@@ -122,7 +122,12 @@ export async function installBin(versionConfig: VersionConfig): Promise<string> 
 
   core.info(`Downloading binary ${assetURL} ...`)
 
-  const archivePath = await tc.downloadTool(assetURL)
+  let auth = ""
+  if (core.getInput("download-url") !== "https://github.com/golangci/golangci-lint/releases/download"){
+    auth = core.getInput("github-token")
+  }
+
+  const archivePath = await tc.downloadTool(assetURL, undefined, auth)
 
   let extractedDir = ""
   let repl = /\.tar\.gz$/
