@@ -124,7 +124,7 @@ export async function installBin(versionConfig: VersionConfig): Promise<string> 
 
   let auth = ""
   if (core.getInput("download-url") !== "https://github.com/golangci/golangci-lint/releases/download"){
-    auth = core.getInput("github-token")
+    auth = `Bearer ${core.getInput("github-token")}`
   }
 
   const archivePath = await tc.downloadTool(assetURL, undefined, auth)
