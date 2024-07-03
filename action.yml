@@ -8,10 +8,16 @@ inputs:
       The version of golangci-lint to use.
       When `install-mode` is `binary` (default) the value can be v1.2 or v1.2.3 or `latest` to use the latest version.
       When `install-mode` is `goinstall` the value can be v1.2.3, `latest`, or the hash of a commit.
+      When `install-mode` is `none` it is ignored.
     required: false
   install-mode:
-    description: "The mode to install golangci-lint. It can be 'binary' or 'goinstall'."
+    description: "The mode to install golangci-lint. It can be 'binary', 'goinstall', 'none'."
     default: "binary"
+    required: false
+  install-path:
+    description: |
+      When `install-mode` is `none` this is the location of the `golangci-lint` binary, if not set system path will be 
+      used.
     required: false
   working-directory:
     description: "golangci-lint working directory, default is project root"
@@ -22,23 +28,23 @@ inputs:
     required: false
   only-new-issues:
     description: "if set to true and the action runs on a pull request - the action outputs only newly found issues"
-    default: 'false'
+    default: "false"
     required: false
   skip-cache:
     description: |
       if set to true then the all caching functionality will be complete disabled,
       takes precedence over all other caching options.
-    default: 'false'
+    default: "false"
     required: false
   skip-save-cache:
     description: |
       if set to true then the action will not save any caches, but it may still
       restore existing caches, subject to other options.
-    default: 'false'
+    default: "false"
     required: false
   problem-matchers:
     description: "Force the usage of the embedded problem matchers"
-    default: 'false'
+    default: "false"
     required: false
   args:
     description: "golangci-lint command line arguments"
@@ -46,7 +52,7 @@ inputs:
     required: false
   cache-invalidation-interval:
     description: "Periodically invalidate a cache because a new code being added. (number of days)"
-    default: '7'
+    default: "7"
     required: false
 runs:
   using: "node20"

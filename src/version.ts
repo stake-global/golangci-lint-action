@@ -134,6 +134,10 @@ export async function findLintVersion(mode: InstallMode): Promise<VersionConfig>
     return { TargetVersion: v ? v : "latest", AssetURL: "github.com/golangci/golangci-lint" }
   }
 
+  if (mode == InstallMode.None) {
+    return { TargetVersion: "", AssetURL: ""}
+  }
+
   const reqLintVersion = getRequestedLintVersion()
 
   // if the patched version is passed, just use it
