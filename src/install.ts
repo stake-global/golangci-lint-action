@@ -38,6 +38,7 @@ const getAssetURL = (versionConfig: VersionConfig): string => {
 export enum InstallMode {
   Binary = "binary",
   GoInstall = "goinstall",
+  None = "none"
 }
 
 type ExecRes = {
@@ -69,6 +70,8 @@ export async function installLint(versionConfig: VersionConfig, mode: InstallMod
       return installBin(versionConfig)
     case InstallMode.GoInstall:
       return goInstall(versionConfig)
+    case InstallMode.None:
+        return noneInstall()
     default:
       return installBin(versionConfig)
   }
@@ -145,4 +148,23 @@ export async function installBin(versionConfig: VersionConfig): Promise<string> 
   core.info(`Installed golangci-lint into ${lintPath} in ${Date.now() - startedAt}ms`)
 
   return lintPath
+}
+
+/**
+ * golangci-lint binary is already present on host
+ *
+ * @returns path to installed binary of golangci-lint.
+ */
+export async function noneInstall(): Promise<string> {
+  core.info(`Referencing pre-installed golangci-lint binary`)
+
+  const providedPath = core.getInput(`install-path`);
+
+  if (providedPath) {
+    core.info(`Path has been provided ${providedPath} ...`)
+    return providedPath
+  }
+
+  core.info(`Path has not been provided, using system path`)
+  return "golangci-lint"
 }

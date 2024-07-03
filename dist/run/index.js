@@ -85114,6 +85114,7 @@ exports.InstallMode = void 0;
 exports.installLint = installLint;
 exports.goInstall = goInstall;
 exports.installBin = installBin;
+exports.noneInstall = noneInstall;
 const core = __importStar(__nccwpck_require__(2186));
 const tc = __importStar(__nccwpck_require__(7784));
 const child_process_1 = __nccwpck_require__(2081);
@@ -85148,6 +85149,7 @@ var InstallMode;
 (function (InstallMode) {
     InstallMode["Binary"] = "binary";
     InstallMode["GoInstall"] = "goinstall";
+    InstallMode["None"] = "none";
 })(InstallMode || (exports.InstallMode = InstallMode = {}));
 const printOutput = (res) => {
     if (res.stdout) {
@@ -85171,6 +85173,8 @@ async function installLint(versionConfig, mode) {
             return installBin(versionConfig);
         case InstallMode.GoInstall:
             return goInstall(versionConfig);
+        case InstallMode.None:
+            return noneInstall();
         default:
             return installBin(versionConfig);
     }
@@ -85225,6 +85229,21 @@ async function installBin(versionConfig) {
     const lintPath = path_1.default.join(extractedDir, dirName, `golangci-lint`);
     core.info(`Installed golangci-lint into ${lintPath} in ${Date.now() - startedAt}ms`);
     return lintPath;
+}
+/**
+ * golangci-lint binary is already present on host
+ *
+ * @returns path to installed binary of golangci-lint.
+ */
+async function noneInstall() {
+    core.info(`Referencing pre-installed golangci-lint binary`);
+    const providedPath = core.getInput(`install-path`);
+    if (providedPath) {
+        core.info(`Path has been provided ${providedPath} ...`);
+        return providedPath;
+    }
+    core.info(`Path has not been provided, using system path`);
+    return "golangci-lint";
 }
 
 
@@ -85785,6 +85804,9 @@ async function findLintVersion(mode) {
     if (mode == install_1.InstallMode.GoInstall) {
         const v = core.getInput(`version`);
         return { TargetVersion: v ? v : "latest", AssetURL: "github.com/golangci/golangci-lint" };
+    }
+    if (mode == install_1.InstallMode.None) {
+        return { TargetVersion: "", AssetURL: "" };
     }
     const reqLintVersion = getRequestedLintVersion();
     // if the patched version is passed, just use it
