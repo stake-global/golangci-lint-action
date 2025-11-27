@@ -1,0 +1,14 @@
+# Gitleaks ignore file
+# Generated: 2025-11-28T10:49:49.732609
+# Total fingerprints: 6
+#
+# Each line is a fingerprint to ignore
+# Format: commit:file:rule:line
+#
+
+423fbafafc226b312a399e5a5c942041f5d6f24f:dist/post_run/index.js:generic-api-key:23797
+423fbafafc226b312a399e5a5c942041f5d6f24f:dist/run/index.js:generic-api-key:23807
+c598686db158fa32b2f24ccc664bed4c1b88613c:dist/post_run/index.js:generic-api-key:23322
+c598686db158fa32b2f24ccc664bed4c1b88613c:dist/run/index.js:generic-api-key:23332
+c675eb70db3aa26b496bc4e64da320480338d41b:dist/post_run/index.js:generic-api-key:30757
+c675eb70db3aa26b496bc4e64da320480338d41b:dist/run/index.js:generic-api-key:30757
